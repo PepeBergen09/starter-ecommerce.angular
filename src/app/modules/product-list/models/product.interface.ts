@@ -6,12 +6,6 @@ export interface Product {
     description: string;
     price: number;
     totalPurchase: number;
-    size: Size
+    size: string;
 }
 
-
-interface Size{
-    small: number;
-     medium: number;
-     large: number
-}

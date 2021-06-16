@@ -4,28 +4,28 @@
           <div class="col-md-12">
                 <h2 class="section-header">Products</h2>
                 <div class="shop-items" >
-                  <div class="card shop-item" *ngFor="let item of currentProducts; let i = index" >
+                  <div class="card shop-item" *ngFor="let product of currentProducts$ | async; let i = index" >
                     <div class="card-header bg-primary text-white" >Product {{i+1}}</div>
                     <div class="card-body">
-                      <h4 class="card-title">{{item.title}}</h4>
-                      <img class="shop-item-image"  [src]="item.img"/>
+                      <h4 class="card-title">{{product.title}}</h4>
+                      <img class="shop-item-image"  [src]="product.img"/>
                       <div class="row justify-content-center" style="margin-top: 5px;">
                         <div class="col-md-6" style="margin-top: 5px;"><h6>Price:</h6></div>
-                        <div class="col-md-4">${{item.price}}</div>
+                        <div class="col-md-4">${{product.price}}</div>
                       </div>
                       
                       <div class="shop-item-details">
                         <button type="button" class="btn btn-primary btn-sm" 
                         data-bs-target="#modalProducts" data-bs-toggle="modal"
-                        (click)="modalSelect(1, item)">Quantity</button>
+                        (click)="modalSelect(1, product)">Quantity</button>
                         <button type="button" class="btn btn-primary btn-sm" 
                         data-bs-target="#modalProducts" data-bs-toggle="modal"
                         style="margin-left: 3px;"
-                        (click)="modalSelect(2, item)">Size</button>
+                        (click)="modalSelect(2, product)">Size</button>
                       </div>
                       <div class="shop-item-details" style="margin-top: 7px;">
                         <button type="button" class="btn btn-primary btn-sm" 
-                         (click)="addProductsCart(item)">ADD TO CART</button>
+                         (click)="addProductsCart(product)">ADD TO CART</button>
                       </div>
                     </div>
                   </div>
@@ -42,13 +42,17 @@
                       <th scope="col">TITLE</th>
                       <th scope="col">PRICE</th>
                       <th scope="col">QUANTITY</th>
+                      <th scope="col">Size</th>
+                      <th></th>
                     </tr>
                   </thead>
                   <tbody>
                     <tr *ngFor="let products of productsCart; let i = index">
                       <th scope="row">{{products.title}}</th>
                       <td>{{products.price}}</td>
-                      <td>{{products.totalPurchase}}<button type="button" class="btn btn-danger btn-sm" 
+                      <td>{{products.totalPurchase}}</td>
+                      <td>{{products.size}}</td>
+                      <td><button type="button" class="btn btn-danger btn-sm" 
                         style="margin-left: 20px;" (click)="deleteProduct(products)"
                         >delete</button></td>
                     </tr>
