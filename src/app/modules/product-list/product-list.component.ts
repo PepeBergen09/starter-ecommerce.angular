@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { Product } from "./models/product.interface";
 
-import products from "../../../assets/json/products.json";
-import {Product } from "./models/product.interface";
-
+import { MainService } from './services/main.service';
 
 @Component({
   selector: 'app-product-list',
@@ -13,60 +12,69 @@ export class ProductListComponent implements OnInit {
 
   productsCart: Product[] = [];
   totalPurchase: number = 0;
-  public currentProducts = products;
+  currentProducts$ = this.mainService.baseProducts;
   page: number = 1;
   modalTitle: string = '';
   modalOption:number = 1; // 1 Quantity ; 2 Size
   quantity: number = 1;
   size: string = '1';
-  currentItem: any; 
+  currentItem: any;
 
-  constructor() { }
-    
-  
-  
 
-  public getProduct(items: string | any[]) {
-    var elems = products.filter((item: { id: string; }) => {
-      return items.includes(item.id)
-    });
-    return elems;
-  }
+  constructor(private mainService: MainService) { }
 
   ngOnInit(): void {
     
   }
   
 
-  addProductsCart(item: any){
+  addProductsCart(item:Product){
+
     let productExist= false;
     if (this.currentItem !== item) {
       this.currentItem = item;
       this.quantity = 1;
-      // this.size = 1;
     } 
-
-    
     let totalCash = 0;
-    this.productsCart.forEach(element=>{
-      if (item.title == element.title) {
-        productExist = true;
-        let totalPurchaseBefore = element.totalPurchase;
-        let totalCashBefore = totalPurchaseBefore * element.price;
-        element.totalPurchase += this.quantity;
-        totalCash += element.price * element.totalPurchase;
-        totalCash -= totalCashBefore;
-        
+    console.log(item);
+   let productToCart =item;
+     
+    switch(this.size){
+      case '1':{
+        productToCart.size = "small"; 
+       break;
       }
-      return;
-    });
-
-    if (!productExist) {
-      item.totalPurchase += this.quantity;
-      this.productsCart.push(item);
-      totalCash = item.price * item.totalPurchase
+      case '2':{
+        productToCart.size = "medium"; 
+       break;
+      }
+      case '3':{
+        productToCart.size = "large"; 
+       break;
+      }
     }
-    this.totalPurchase += totalCash
+    console.log(productToCart);
+    for (let index = 0; index < this.productsCart.length; index++) {
+      if( ( productToCart.title === this.productsCart[index].title) && (productToCart.size === this.productsCart[index].size)) {
+        
+          productExist = true;
+          let totalPurchaseBefore = this.productsCart[index].totalPurchase;
+                let totalCashBefore = totalPurchaseBefore * this.productsCart[index].price;
+                this.productsCart[index].totalPurchase += this.quantity;
+                totalCash += this.productsCart[index].price * this.productsCart[index].totalPurchase;
+                totalCash -= totalCashBefore;
+                
+      }
+     }
+    
+    if (!productExist) {
+      productToCart.totalPurchase += this.quantity;
+      this.productsCart.push(productToCart);
+      totalCash = productToCart.price * productToCart.totalPurchase
+    }
+    this.totalPurchase += totalCash;
+    this.size = '1';
+    this.quantity = 1;
   }
  
 
@@ -107,9 +115,9 @@ export class ProductListComponent implements OnInit {
  
    modalWorkOption(){
      if (this.modalOption ===1) {
-       this.addQuantity();
+      // this.addQuantity();
      } else {
-       this.addSize();
+      // this.addSize();
      }
   
    }
@@ -119,22 +127,7 @@ export class ProductListComponent implements OnInit {
    }
   
    addSize(){
-     switch(this.size){
-       case '1':{
-        this.currentItem.size.small ++;
-        break;
-       }
-       case '2':{
-        this.currentItem.size.medium ++;
-        break;
-       }
-       case '3':{
-        this.currentItem.size.large ++;
-        break;
-       }
-     }
-    console.log(this.currentItem) ;
-   
+    
    }
   
 }
