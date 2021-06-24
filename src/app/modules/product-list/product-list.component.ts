@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+
 import { Product } from "./models/product.interface";
+import { productCart } from './models/cart.interface';
 
 import { MainService } from './services/main.service';
 
@@ -10,7 +12,7 @@ import { MainService } from './services/main.service';
 })
 export class ProductListComponent implements OnInit {
 
-  productsCart: Product[] = [];
+  productsCart: productCart[] = [];
   totalPurchase: number = 0;
   currentProducts$ = this.mainService.baseProducts;
   page: number = 1;
@@ -36,7 +38,12 @@ export class ProductListComponent implements OnInit {
       this.quantity = 1;
     } 
     let totalCash = 0;
-   let productToCart =item;
+   let productToCart: productCart = {
+    title: item.title,
+    price: item.price,
+    totalPurchase: item.totalPurchase,
+    size: ""
+   };
      
     switch(this.size){
       case '1':{
@@ -76,7 +83,7 @@ export class ProductListComponent implements OnInit {
   }
  
 
-  deleteProduct(item: Product ){
+  deleteProduct(item: productCart ){
     for (let index = 0; index < this.productsCart.length; index++) {
       if(this.productsCart[index] === item){
         let totalProductPrice = this.productsCart[index].totalPurchase * this.productsCart[index].price;
@@ -87,7 +94,7 @@ export class ProductListComponent implements OnInit {
     }
   }
 
-  removeItemFromArr( arr: Product[] , item: Product ) {
+  removeItemFromArr( arr: productCart[] , item: productCart ) {
     // var i = arr.indexOf( item );
     // if ( i !== -1 ) {
     //     arr.splice( i, 1 );
