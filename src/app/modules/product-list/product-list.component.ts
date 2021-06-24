@@ -36,7 +36,6 @@ export class ProductListComponent implements OnInit {
       this.quantity = 1;
     } 
     let totalCash = 0;
-    console.log(item);
    let productToCart =item;
      
     switch(this.size){
@@ -53,7 +52,6 @@ export class ProductListComponent implements OnInit {
        break;
       }
     }
-    console.log(productToCart);
     for (let index = 0; index < this.productsCart.length; index++) {
       if( ( productToCart.title === this.productsCart[index].title) && (productToCart.size === this.productsCart[index].size)) {
         
@@ -81,11 +79,9 @@ export class ProductListComponent implements OnInit {
   deleteProduct(item: Product ){
     for (let index = 0; index < this.productsCart.length; index++) {
       if(this.productsCart[index] === item){
-        this.productsCart[index].totalPurchase --;
-        this.totalPurchase -= this.productsCart[index].price;
-        if (this.productsCart[index].totalPurchase === 0) {
-         this.removeItemFromArr(this.productsCart, this.productsCart[index]);
-        }   
+        let totalProductPrice = this.productsCart[index].totalPurchase * this.productsCart[index].price;
+        this.totalPurchase -= totalProductPrice;
+        this.removeItemFromArr(this.productsCart, this.productsCart[index]); 
       }
       
     }
@@ -112,6 +108,7 @@ export class ProductListComponent implements OnInit {
    }
 
  }
+
  
    modalWorkOption(){
      if (this.modalOption ===1) {

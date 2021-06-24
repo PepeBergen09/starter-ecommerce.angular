@@ -10,19 +10,41 @@
                       <h4 class="card-title">{{product.title}}</h4>
                       <img class="shop-item-image"  [src]="product.img"/>
                       <div class="row justify-content-center" style="margin-top: 5px;">
-                        <div class="col-md-6" style="margin-top: 5px;"><h6>Price:</h6></div>
-                        <div class="col-md-4">${{product.price}}</div>
+                        <div class="col-sm-5" style="margin-top: 5px;"><h6>Price:</h6></div>
+                        <div class="col-sm-4">${{product.price}}</div>
                       </div>
-                      
+                     
+                      <!-- <div class="shop-item-details"> -->
+                        <div class="row align-items-center" style="text-align: center;padding-left: 20px;">
+                          <div class="col-sm-2"  style=" margin: 0; padding: 0; "></div> 
+                          <div class="col-sm-3" 
+                          style=" margin: 0; padding-top: 0;padding-bottom: 8px; padding-left: 5px; padding-right: 5px; "> 
+                            <input type="number" id="quantity" class="form-control" [(ngModel)]="quantity" 
+                            style="width: 80%; padding: 0; margin: 0;">
+                          </div>
+                          <div class="col-sm-2" 
+                          style="margin: 0; padding-bottom: 20px; padding-top: 0; padding-left: 0; padding-right: 0; width: 50px;">
+                            <span class="badge bg-primary mt-4">Quantity</span> 
+                          </div>
+                          
+                          <!-- <label for="quantity" class="form-label mt-4">Quantity</label> -->
+                         
+                        </div>
+                        <!-- <button type="button" class="btn btn-primary btn-sm" 
+                        data-bs-target="#modalProducts" data-bs-toggle="modal"
+                        (click)="modalSelect(1, product)">Quantity</button> -->
+                      <!-- </div> -->
                       <div class="shop-item-details">
-                        <button type="button" class="btn btn-primary btn-sm" 
-                        data-bs-target="#modalProducts" data-bs-toggle="modal"
-                        (click)="modalSelect(1, product)">Quantity</button>
-                        <button type="button" class="btn btn-primary btn-sm" 
-                        data-bs-target="#modalProducts" data-bs-toggle="modal"
-                        style="margin-left: 3px;"
-                        (click)="modalSelect(2, product)">Size</button>
+                        <div class="row">
+                          <button type="button" class="btn btn-primary my-bt"
+                          data-bs-target="#modalProducts" data-bs-toggle="modal"
+                        (click)="modalSelect(2, product)"
+                          >Extra</button>
+                        </div>
                       </div>
+
+
+                      
                       <div class="shop-item-details" style="margin-top: 7px;">
                         <button type="button" class="btn btn-primary btn-sm" 
                          (click)="addProductsCart(product)">ADD TO CART</button>
