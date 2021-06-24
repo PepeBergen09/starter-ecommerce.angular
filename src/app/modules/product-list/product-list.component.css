@@ -147,3 +147,11 @@
   padding-right: 60px;
   
 }
+
+.my-bt{
+  height: 10px;
+  padding-bottom: 25px;
+  padding-top:1px;
+  width: min-content;
+  margin-left: 32%;
+}
